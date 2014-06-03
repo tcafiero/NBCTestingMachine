@@ -11,6 +11,16 @@ byte i;
 int Current1, Current2, AverageCurrent1, AverageCurrent2;
 byte SearchingFallingEdge;
 
+int i2c_putc(char c, FILE *)
+{
+  TinyWireM.beginTransmission(SLAVE);
+  TinyWireM.send(c);
+  TinyWireM.endTransmission();          // Send to the slave
+  return 0;
+ 
+}
+
+#ifdef ALTERNATIVE //old implementation onli for remind alternative wai to print
 void putstr(char string[])
 {
   int i=0;
@@ -31,7 +41,11 @@ void i2cprintf(char *fmt, ... ){
         va_end (args);
         putstr(buf);
 }
+#endif
+
+
 void setup(){
+  fdevopen(&i2c_putc, NULL);
   pinMode(CurrentSensor1, INPUT);
   pinMode(CurrentSensor2, INPUT);
   delay(1000);
@@ -63,7 +77,7 @@ void loop(){
     {
     if(abs(Current1/SAMPLES-AverageCurrent1) >= 5)
     {
-      i2cprintf("ON\n\r");
+      printf("ON\n\r");
       SearchingFallingEdge=1;
     }
     }
@@ -71,11 +85,11 @@ void loop(){
     {
     if(abs(Current1/SAMPLES-AverageCurrent1) < 3)
     {
-      i2cprintf("OFF\n\r");
+      printf("OFF\n\r");
       SearchingFallingEdge=0;
     }
     }
- //   i2cprintf("Current1 = %d, Current2= %d\n\r", Current1/SAMPLES, Current2/SAMPLES);
+ //   printf("Current1 = %d, Current2= %d\n\r", Current1/SAMPLES, Current2/SAMPLES);
     Current1=0;
     Current2=0;
   }
@@ -86,7 +100,7 @@ void loop(){
   }
   delay(1);
   }
-//  else p("Noise is present data invalid\n\r");
+//  else printf("Noise is present data invalid\n\r");
 }
 
 
