@@ -36,8 +36,8 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
-byte PositionSelectorA[] = {0, 5, 14, 28, 59, 0, 0};
-byte ChipSelect[] = {10, 8, 7, 6, 5};
+const byte PositionSelectorA[] = {0, 5, 14, 28, 59, 0, 0};
+byte ChipSelect[] = {10, 9};
 int i = 0;
 char ch;
 #define BUFSIZE 80
