@@ -4,10 +4,10 @@
 #include <string.h>
 #include <stdarg.h>
 #include <stdlib.h>
-#define ACTIVEOP_ADAPTOR0  2
+#define I2C_ADDRESS  11 //for this kind of module legal address are 11, 12, 13, 14, 15, 16
 
 byte PositionSelectorA[] = {0, 5, 14, 28, 59, 0, 0};
-byte ChipSelect[] = {10, 9, 8};
+byte ChipSelect[] = {10, 9};
 byte Relay[] = {2, 3, 4, 5, 6, 7};
 
 int myputc(char c, FILE *)
@@ -17,9 +17,14 @@ int myputc(char c, FILE *)
 }
 
 void setup() {
+  for(byte i=0; i < sizeof(ChipSelect) ; i++)
+    pinMode(ChipSelect[i], OUTPUT);
+  for(byte i=0; i < sizeof(Relay) ; i++)
+    pinMode(Relay[i], OUTPUT);
   Serial.begin(115200);
   fdevopen(&myputc, NULL);
-  Wire.begin(ACTIVEOP_ADAPTOR0);                // join i2c bus with address
+  Wire.begin(I2C_ADDRESS);                // join i2c bus with address
+  SPI.begin();
   Wire.onReceive(receiveEvent); // register event
 }
 
@@ -39,16 +44,18 @@ void SelectorA(int id, int value) {
   digitalWrite(ChipSelect[Chip], HIGH);
 }
 
-void RelayCommand(int i, int level)
+void RelayCommand(int rel, int level)
 {
-  digitalWrite(Relay[i], level);
+  digitalWrite(Relay[rel], level);
 }
 
 void receiveEvent(int num)
 {
   char command[10];
   for (byte i = 0; i < num; i++)
+  {
     command[i] = Wire.read();
+  }
   switch (command[0])
   {
     case 's':
