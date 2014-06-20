@@ -14,6 +14,7 @@ char* CommandSwitch(byte Switch, byte Position);
 char* CommandSelectorA(byte Switch, byte Position);
 char* RequestWave();
 char* RequestRawData();
+char* RequestStatus(byte Signal);
 
 
 // Put here function wrapper
@@ -22,22 +23,30 @@ void CommandSelectorA_wrapper(int argc, char **argv)
   byte a;
   byte b;
   argvscanf("%d %d", &a, &b);
-  result("%s", CommandSelectorA(a, b));
+	CommandSelectorA(a, b);
+//  result("Result: %s", CommandSelectorA(a, b));
 }
 void CommandSwitch_wrapper(int argc, char **argv)
 {
   byte a;
   byte b;
   argvscanf("%d %d", &a, &b);
-  result("%s", CommandSwitch(a, b));
+	CommandSwitch(a, b);
+//  result("Result: %s", CommandSwitch(a, b));
 }
 void RequestWave_wrapper(int argc, char **argv)
 {
-  result("%s", RequestWave());
+  result("%s\n", RequestWave());
 }
 void RequestRawData_wrapper(int argc, char **argv)
 {
-  result("%s", RequestRawData());
+  result("%s\n", RequestRawData());
+}
+void RequestStatus_wrapper(int argc, char **argv)
+{
+  byte Signal;
+  argvscanf("%d", &Signal);
+	result("%s\n", RequestStatus(Signal));
 }
 
 //Put here Publish function table
@@ -47,6 +56,7 @@ PublishFunctionStruct PublishFunction[] =
   {"CommandSelectorA", CommandSelectorA_wrapper},
   {"RequestWave", RequestWave_wrapper},
   {"RequestRawData", RequestRawData_wrapper},
+  {"RequestStatus", RequestStatus_wrapper},
   {"", 0}
 };
 
@@ -59,7 +69,7 @@ void ParserPutchar(int ch)
 // Put here function ParserGetchar to input character
 int ParserGetchar()
 {
-  return Serial.read();;
+  return Serial.read();
 }
 
 
@@ -159,10 +169,14 @@ void result(char *format, ...)
     if ( *fp == '%' ) {
       switch ( *++fp ) {
         case 'd':
-          printf("\nResult: %d", va_arg ( ap, int ));
+          printf("%d", va_arg ( ap, int ));
+          ParserPutchar(0xa);
+          ParserPutchar(0xd);
           break;
         case 's':
-          printf("\nResult: %s", va_arg ( ap, char * ));
+          printf("%s", va_arg ( ap, char * ));
+          ParserPutchar(0xa);
+          ParserPutchar(0xd);
           break;
       }
     }
@@ -206,10 +220,10 @@ void MicroShell()
         }
         break;
       case 0x0a:	buffer[i] = 0;
-        Execute(buffer);
+       ParserPutchar(0xd);
+       Execute(buffer);
         i = 0;
         buffer[0] = 0;
-        ParserPutchar(0xa);
         //ParserPutchar(0xd);
         ParserPutchar('>');
         break;
