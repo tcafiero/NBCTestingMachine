@@ -11,5 +11,6 @@ puts $s.gets
 sleep(2)
 
 at_exit do
+sleep(5)
 $s.close
 end

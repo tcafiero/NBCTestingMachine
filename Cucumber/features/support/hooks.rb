@@ -8,6 +8,7 @@ sleep(2)
 end
 
 After do
+sleep(5)
 end
 
 def Switch(*args)
@@ -21,6 +22,7 @@ end
 def Status(*args)
   $s.puts "RequestStatus %d \n" % args
   value=$s.gets.split(' ')
+	puts value
   return value.last.to_i
 end
 
