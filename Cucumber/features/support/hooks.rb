@@ -1,7 +1,10 @@
 require 'socket'      # Sockets are in standard library
 
+hostname = 'localhost'
+port = 7777
 
 Before do
+sleep(2)
 end
 
 After do
@@ -21,15 +24,17 @@ def Status(*args)
   return value.last.to_i
 end
 
+$marker=Array.new(10)
 class Timer
  def self.marker(i)
-  @marker[i] = Time.now
+  $marker[i] = Time.now
  end
  
  def self.from_marker(which, delay)
-  remainder=delay-(Time.now-@marker[which])
-	if remainder > 0
-		sleep(remainder)
+  remainder=delay-(Time.now-$marker[which])
+  if remainder > 0
+    sleep(remainder)
+  end
  end
  
 end
