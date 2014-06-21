@@ -1,3 +1,6 @@
+//delete comment in following statement if you need echo
+//#define ECHO 1
+
 // Do not touch following lines end comment
 typedef struct
 {
@@ -23,16 +26,16 @@ void CommandSelectorA_wrapper(int argc, char **argv)
   byte a;
   byte b;
   argvscanf("%d %d", &a, &b);
-	CommandSelectorA(a, b);
-//  result("Result: %s", CommandSelectorA(a, b));
+  CommandSelectorA(a, b);
+  //  result("Result: %s", CommandSelectorA(a, b));
 }
 void CommandSwitch_wrapper(int argc, char **argv)
 {
   byte a;
   byte b;
   argvscanf("%d %d", &a, &b);
-	CommandSwitch(a, b);
-//  result("Result: %s", CommandSwitch(a, b));
+  CommandSwitch(a, b);
+  //  result("Result: %s", CommandSwitch(a, b));
 }
 void RequestWave_wrapper(int argc, char **argv)
 {
@@ -46,7 +49,7 @@ void RequestStatus_wrapper(int argc, char **argv)
 {
   byte Signal;
   argvscanf("%d", &Signal);
-	result("%s\n", RequestStatus(Signal));
+  result("%s\n", RequestStatus(Signal));
 }
 
 //Put here Publish function table
@@ -205,34 +208,42 @@ static void Execute(char *buffer)
 
 void InitMicroShell()
 {
-  i=0;
-  }
+  i = 0;
+}
 
 void MicroShell()
 {
-    char ch = (char)ParserGetchar();
-    switch (ch)
-    {
-      case 0x8: 	if (i)
-        {
-          i--;
-          ParserPutchar((int)ch);
-        }
-        break;
-      case 0x0a:	buffer[i] = 0;
-       ParserPutchar(0xd);
-       Execute(buffer);
-        i = 0;
-        buffer[0] = 0;
-        //ParserPutchar(0xd);
-        ParserPutchar('>');
-        break;
-      default:		if (i >= BUFSIZE - 2)
-        {
-          ParserPutchar((int)0x7);
-          break;
-        }
-        buffer[i++] = ch;
+  char ch = (char)ParserGetchar();
+  switch (ch)
+  {
+    case 0x8: 	if (i)
+      {
+#ifdef ECHO
+        i--;
         ParserPutchar((int)ch);
-    }
-    }
+#endif
+      }
+      break;
+    case 0x0a:
+    case 0x0d:
+      buffer[i] = 0;
+      ParserPutchar(0xd);
+      Execute(buffer);
+      i = 0;
+      buffer[0] = 0;
+      //ParserPutchar(0xd);
+#ifdef ECHO
+      ParserPutchar('>');
+#endif
+      break;
+    default:		if (i >= BUFSIZE - 2)
+      {
+        ParserPutchar((int)0x7);
+        break;
+      }
+      buffer[i++] = ch;
+#ifdef ECHO
+      ParserPutchar((int)ch);
+#endif
+  }
+}
