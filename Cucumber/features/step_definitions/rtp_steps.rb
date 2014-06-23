@@ -3,23 +3,23 @@
 require 'cucumber/formatter/unicode'
 require 'rspec/expectations'
 
-Given /^the Switch (.+) at level (.+)$/ do |a, b|
-	Switch($dictionary[a], b.to_i)
-end
-
-Given /^the Selector Type:A (.+) at position (.+)$/ do |a, b|
-	SelectorA($dictionary[a], b.to_i)
+Given /^the Signal (.+) at level (.+)$/ do |a, b|
+#	$rack=Rack.new
+	$rack.send($dictionary[a][0], $dictionary[a][1], b.to_i)
 end
 
 Given /^setting time marker (.+)$/ do |a|
-	Timer.marker(a.to_i)
+#	$timer=Timer.new
+	$timer.marker(a.to_i)
 end
 
 When /^after (.+) secs starting from time marker (.+)$/ do |a, b|
-	Timer.from_marker(b.to_i,a.to_i)
+#	$timer=Timer.new
+	$timer.from_marker(b.to_i,a.to_i)
 end
 
 
 Then /^the output Signal (.+) should be (.+)$/ do |a, expected|
-	expect(Status($dictionary[a])).to eq(expected.to_i)
+#	$rack=Rack.new
+	expect($rack.send('status', $dictionary[a][1])).to eq(expected.to_i)
 end

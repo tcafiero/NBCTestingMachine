@@ -1,0 +1,20 @@
+{"signal":
+ [
+   ["Input",
+  		{"name": "KeySts",                 "wave":   "3.....|.....",
+                                           "node": "............", "data": ["1"]},
+  		{"name": "ComfortEnable",          "wave":   "01....|0....",
+                                           "node": ".a.........."},
+  		{"name": "FollowMeCmd",            "wave":   "0p0.p.|1....",
+                                           "node": "............"}
+   ],
+  {},
+  ["Output",
+     	{"name": "PosLightFollowMeCmd",    "wave":   "01....|.0...",
+                                           "node": ".......b...."}
+  ]
+ ],
+   "edge":["a~->b 40sec"],
+   "head": {"text":"VF000","tick":"0"},
+   "foot": {"text":"tick: 1 sec"}
+}

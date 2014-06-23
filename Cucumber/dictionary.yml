@@ -1,4 +1,8 @@
-HighBeamCmd: 0
-LowBeamCmd: 1
-HighBeam: 0
-LowBeam: 1
+HighBeamCmd: ['switch', 0]
+LowBeamCmd: ['switch', 1]
+HighBeam: ['sensor', 0]
+LowBeam: ['sensor', 1]
+KeySts: ['selectorA', 0]
+ComfortEnable: ['switch', 1]
+FollowMeCmd: ['switch', 0]
+PosLightFollowMeCmd: ['sensor', 1]

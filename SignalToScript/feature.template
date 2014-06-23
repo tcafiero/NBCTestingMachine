@@ -1,0 +1,36 @@
+
+Feature: <%= ARGV[0] %>
+	Scenario: Compiled from <%= ARGV[0] %>.json
+<%
+previousTime=0.0
+event.keys.sort.each do | time|
+array=event[time]
+%>
+		Given setting time marker 1
+		When after <%= ((time-previousTime).to_i).to_s %> secs starting from time marker 1
+<%
+	previousTime=time
+  n_events=0
+  array.each do | action |
+    if action[2] != -1
+      if action[0].casecmp("Input") == 0
+%>
+		Given the Signal <%= action[1] %> at level <%= action[2].to_s %>
+<%
+        n_events += 1
+      end
+    end
+  end
+  array.each do | action |
+    if action[2] != -1
+      if action[0].casecmp("Output") == 0
+%>
+ 		Then the output Signal <%= action[1] %> should be <%= action[2].to_s %>
+<%
+			end
+    end
+  end
+end
+%>
+
+		
