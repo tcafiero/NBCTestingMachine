@@ -1,3 +1,2 @@
-#!/bin/bash
-
+mode COM5 BAUD=115200 PARITY=n DATA=8 DTR=ON
 socat TCP-LISTEN:7777,fork /dev/ttyS4,raw,echo=0,b115200
