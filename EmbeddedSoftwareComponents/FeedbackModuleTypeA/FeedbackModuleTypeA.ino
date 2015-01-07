@@ -1,7 +1,14 @@
 #include <Wire.h>
 #include <stdio.h>
 
-#define CURRENT_SENSOR_ADAPTOR0  1
+// for Selector {1, 2, 3, 4, 5};
+// for Switch {11, 12, 13, 14, 15}
+// for CurrentSensor {21, 22, 23, 24, 25};
+
+//#define I2C_ADDRESS  1   /* this for first SelectorModule on the i2c BUS */
+//#define I2C_ADDRESS  11 /* this for first SwtchModule on the i2c BUS */
+#define I2C_ADDRESS  21 /* this for first CurrentSensorModule on the i2c BUS */
+
 #define INITIAL_SAMPLES         100
 #define SAMPLES        32
 #define CONVERSION_TIME 1              // the right value would be 1/10000*1000
@@ -47,7 +54,7 @@ void setup() {
     Edge[i] = 0;
   }
   sample = 0;
-  Wire.begin(CURRENT_SENSOR_ADAPTOR0);                // join i2c bus with address
+  Wire.begin(I2C_ADDRESS);                // join i2c bus with address
   Wire.onReceive(receiveEvent); // register event
 }
 

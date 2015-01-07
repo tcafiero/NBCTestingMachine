@@ -1,16 +1,26 @@
-#include <Wire.h>
+
 #include <stdio.h>
-#define N_SELECTORPERMODULE 12
-#define N_RELAYPERMODULE 6
-#define N_SENSORPERMODULE 6
+#include <SPI.h>
+#include <Wire.h>
+
+#define N_SELECTORSPERMODULE 6
+#define N_SWITCHESPERMODULE 5
+#define N_CURRENTSENSORSPERMODULE 5
 #define N_ADC 6
 
-byte CommandModuleAddress[] = {11, 12, 13, 14, 15, 16};
-byte FeedbackModuleAddress[] = {1, 2, 3, 4, 5, 6};
+// byte CommandModuleAddress[] = {11, 12, 13, 14, 15, 16};
+// byte FeedbackModuleAddress[] = {1, 2, 3, 4, 5, 6};
 
-unsigned int Raw[N_SENSORPERMODULE];
-byte Wave[N_SENSORPERMODULE];
-byte Edge[N_SENSORPERMODULE];
+int SelectorModuleAddress[] = {1, 2, 3, 4, 5};
+int SwitchModuleAddress[] = {11, 12, 13, 14, 15};
+int CurrentSensorModuleAddress[] = {21, 22, 23, 24, 25};
+
+
+
+
+unsigned int Raw[N_CURRENTSENSORSPERMODULE];
+byte Wave[N_CURRENTSENSORSPERMODULE];
+byte Edge[N_CURRENTSENSORSPERMODULE];
 
 byte ClockCmd = 'c';
 byte RawReq = 'd';
@@ -45,34 +55,34 @@ void loop()
     MicroShell();
 }
 
-char* CommandSelectorA(byte Selector, byte Position)
+char* CommandSelector(int Selector, int Position)
 {
-  Wire.beginTransmission(CommandModuleAddress[Selector / N_SELECTORPERMODULE]);
+  Wire.beginTransmission(SelectorModuleAddress[Selector / N_SELECTORSPERMODULE]);
   Wire.write(SelectorACmd);             // sends value byte
-  Wire.write(Selector % N_SELECTORPERMODULE);
+  Wire.write(Selector % N_SELECTORSPERMODULE);
   Wire.write(Position);
   Wire.endTransmission();
   return "OK";
 }
 
-char* CommandSwitch(byte Switch, byte Position)
+char* CommandSwitch(int Switch, int Position)
 {
-  Wire.beginTransmission(CommandModuleAddress[Switch / N_RELAYPERMODULE]);
+  Wire.beginTransmission(SwitchModuleAddress[Switch / N_SWITCHESPERMODULE]);
   Wire.write(SwitchCmd);
-  Wire.write(Switch % N_RELAYPERMODULE);
+  Wire.write(Switch % N_SWITCHESPERMODULE);
   Wire.write(Position);
   Wire.endTransmission();
   return "OK";
 }
 
-char* RequestStatus(byte Signal)
+char* RequestStatus(int Signal)
 {
-  Wire.beginTransmission(FeedbackModuleAddress[Signal / N_SENSORPERMODULE]);
+  Wire.beginTransmission(CurrentSensorModuleAddress[Signal / N_CURRENTSENSORSPERMODULE]);
   Wire.write(WaveReq);             // sends value byte
   Wire.endTransmission();     // stop transmitting
   delay(100);
-  Wire.requestFrom(1, 6);    // request 6 bytes from slave device #2
-  for (int i = 0 ; i < 6;)   // slave may send less than requested
+  Wire.requestFrom(CurrentSensorModuleAddress[Signal / N_CURRENTSENSORSPERMODULE], N_CURRENTSENSORSPERMODULE);    // request N_CURRENTSENSORSPERMODULE bytes from slave device
+  for (int i = 0 ; i < N_CURRENTSENSORSPERMODULE;)   // slave may send less than requested
   {
     if (Wire.available())
     {
@@ -80,18 +90,18 @@ char* RequestStatus(byte Signal)
       Wave[i++] = val; // receive a byte as character
     }
   }
-  sprintf(outbuffer, "Signal %d %d", Signal , Wave[Signal % N_SENSORPERMODULE]);
+  sprintf(outbuffer, "Signal %d %d", Signal , Wave[Signal % N_CURRENTSENSORSPERMODULE]);
   return outbuffer;
 }
 
-char* RequestWave()
+char* RequestWave(int Signal)
 {
-  Wire.beginTransmission(1);
+  Wire.beginTransmission(CurrentSensorModuleAddress[Signal / N_CURRENTSENSORSPERMODULE]);
   Wire.write(WaveReq);             // sends value byte
   Wire.endTransmission();     // stop transmitting
   delay(100);
-  Wire.requestFrom(1, 6);    // request 6 bytes from slave device #2
-  for (int i = 0 ; i < 6;)   // slave may send less than requested
+  Wire.requestFrom(CurrentSensorModuleAddress[Signal / N_CURRENTSENSORSPERMODULE], N_CURRENTSENSORSPERMODULE);    // request N_CURRENTSENSORSPERMODULE bytes from slave device
+  for (int i = 0 ; i < N_CURRENTSENSORSPERMODULE;)   // slave may send less than requested
   {
     if (Wire.available())
     {
@@ -99,19 +109,19 @@ char* RequestWave()
       Wave[i++] = val; // receive a byte as character
     }
   }
-  sprintf(outbuffer, "Wave 1: %-1x %-1x %-1x %-1x %-1x %-1x", Wave[0], Wave[1], Wave[2], Wave[3], Wave[4], Wave[5]);
+  sprintf(outbuffer, "Wave %d: %-1x %-1x %-1x %-1x %-1x", CurrentSensorModuleAddress[Signal / N_CURRENTSENSORSPERMODULE], Wave[0], Wave[1], Wave[2], Wave[3], Wave[4]);
   return outbuffer;
 }
 
-char* RequestRawData()
+char* RequestRawData(int Signal)
 {
-  Wire.beginTransmission(1);
+  Wire.beginTransmission(CurrentSensorModuleAddress[Signal / N_CURRENTSENSORSPERMODULE]);
   Wire.write(RawReq);             // sends value byte
   Wire.endTransmission();     // stop transmitting
   delay(100);
-  Wire.requestFrom(1, 12);    // request 6 bytes from slave device #2
+  Wire.requestFrom(CurrentSensorModuleAddress[Signal / N_CURRENTSENSORSPERMODULE], CurrentSensorModuleAddress[Signal / N_CURRENTSENSORSPERMODULE]*2);    // request n bytes from slave device
   char *ptr = (char *)Raw;
-  for (int i = 0 ; i < 12;)   // slave may send less than requested
+  for (int i = 0 ; i < CurrentSensorModuleAddress[Signal / N_CURRENTSENSORSPERMODULE]*2;)   // slave may send less than requested
   {
     if (Wire.available())
     {
@@ -119,6 +129,6 @@ char* RequestRawData()
       ptr[i++] = val; // receive a byte as character
     }
   }
-  sprintf(outbuffer, "Raw 1: %02x %02x %02x %02x %02x %02x", Raw[0], Raw[1], Raw[2], Raw[3], Raw[4], Raw[5]);
+  sprintf(outbuffer, "Raw %d: %02x %02x %02x %02x %02x %02x", CurrentSensorModuleAddress[Signal / N_CURRENTSENSORSPERMODULE], Raw[0], Raw[1], Raw[2], Raw[3], Raw[4], Raw[5]);
   return outbuffer;
 }

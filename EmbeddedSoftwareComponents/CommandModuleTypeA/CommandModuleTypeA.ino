@@ -4,11 +4,20 @@
 #include <string.h>
 #include <stdarg.h>
 #include <stdlib.h>
-#define I2C_ADDRESS  11 //for this kind of module legal address are 11, 12, 13, 14, 15, 16
+#include <EEPROM.h>
+
+#define ENABLE_EEPROM_PROG_PIN 9
+// for Selector {1, 2, 3, 4, 5};
+// for Switch {11, 12, 13, 14, 15}
+// for CurrentSensor {21, 22, 23, 24, 25};
+byte i2c_address;
+//#define I2C_ADDRESS  1   /* this for first SelectorModule on the i2c BUS */
+//#define I2C_ADDRESS  11 /* this for first SwtchModule on the i2c BUS */
+//#define I2C_ADDRESS  21 /* this for first CurrentSensorModule on the i2c BUS */
 
 byte PositionSelectorA[] = {0, 5, 14, 28, 59, 0, 0};
-byte ChipSelect[] = {10, 9};
-byte Relay[] = {2, 3, 4, 5, 6, 7};
+byte ChipSelect[] = {10};
+byte Relay[] = {2, 3, 4, 5, 6};
 
 int myputc(char c, FILE *)
 {
@@ -17,13 +26,25 @@ int myputc(char c, FILE *)
 }
 
 void setup() {
-  for(byte i=0; i < sizeof(ChipSelect) ; i++)
-    pinMode(ChipSelect[i], OUTPUT);
-  for(byte i=0; i < sizeof(Relay) ; i++)
-    pinMode(Relay[i], OUTPUT);
   Serial.begin(115200);
   fdevopen(&myputc, NULL);
-  Wire.begin(I2C_ADDRESS);                // join i2c bus with address
+  pinMode(ENABLE_EEPROM_PROG_PIN, INPUT);
+  digitalWrite(ENABLE_EEPROM_PROG_PIN, LOW);
+  if (digitalRead(ENABLE_EEPROM_PROG_PIN))
+  {
+    printf("Holistic Systems\n");
+    printf("Input i2c address:\n");
+    scanf("%d", &i2c_address);
+    EEPROM.write(0, i2c_address);
+  };
+  i2c_address = EEPROM.read(0);
+  printf("Holistic Systems\n");
+  printf("Module i2c address: %d\n", i2c_address);
+  for (byte i = 0; i < sizeof(ChipSelect) ; i++)
+    pinMode(ChipSelect[i], OUTPUT);
+  for (byte i = 0; i < sizeof(Relay) ; i++)
+    pinMode(Relay[i], OUTPUT);
+  Wire.begin(i2c_address);                // join i2c bus with address
   SPI.begin();
   Wire.onReceive(receiveEvent); // register event
 }

@@ -13,20 +13,20 @@ void result(char *format, ...);
 
 
 // Put here function prototype to expose with micro shell
-char* CommandSwitch(byte Switch, byte Position);
-char* CommandSelectorA(byte Switch, byte Position);
-char* RequestWave();
-char* RequestRawData();
-char* RequestStatus(byte Signal);
+char* CommandSwitch(int Switch, int Position);
+char* CommandSelector(int Switch, int Position);
+char* RequestWave(int Signal);
+char* RequestRawData(int Signal);
+char* RequestStatus(int Signal);
 
 
 // Put here function wrapper
-void CommandSelectorA_wrapper(int argc, char **argv)
+void CommandSelector_wrapper(int argc, char **argv)
 {
   byte a;
   byte b;
   argvscanf("%d %d", &a, &b);
-  CommandSelectorA(a, b);
+  CommandSelector(a, b);
   //  result("Result: %s", CommandSelectorA(a, b));
 }
 void CommandSwitch_wrapper(int argc, char **argv)
@@ -39,11 +39,15 @@ void CommandSwitch_wrapper(int argc, char **argv)
 }
 void RequestWave_wrapper(int argc, char **argv)
 {
-  result("%s\n", RequestWave());
+  byte Signal;
+  argvscanf("%d", &Signal);
+  result("%s\n", RequestWave(Signal));
 }
 void RequestRawData_wrapper(int argc, char **argv)
 {
-  result("%s\n", RequestRawData());
+  byte Signal;
+  argvscanf("%d", &Signal);
+  result("%s\n", RequestRawData(Signal));
 }
 void RequestStatus_wrapper(int argc, char **argv)
 {
@@ -56,7 +60,7 @@ void RequestStatus_wrapper(int argc, char **argv)
 PublishFunctionStruct PublishFunction[] =
 {
   {"CommandSwitch", CommandSwitch_wrapper},
-  {"CommandSelectorA", CommandSelectorA_wrapper},
+  {"CommandSelector", CommandSelector_wrapper},
   {"RequestWave", RequestWave_wrapper},
   {"RequestRawData", RequestRawData_wrapper},
   {"RequestStatus", RequestStatus_wrapper},
