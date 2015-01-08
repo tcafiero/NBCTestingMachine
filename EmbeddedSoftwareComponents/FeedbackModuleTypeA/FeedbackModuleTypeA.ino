@@ -1,13 +1,16 @@
 #include <Wire.h>
 #include <stdio.h>
+#include <EEPROM.h>
 
+#define ENABLE_EEPROM_PROG_PIN 9
 // for Selector {1, 2, 3, 4, 5};
 // for Switch {11, 12, 13, 14, 15}
 // for CurrentSensor {21, 22, 23, 24, 25};
 
+byte i2c_address;
 //#define I2C_ADDRESS  1   /* this for first SelectorModule on the i2c BUS */
 //#define I2C_ADDRESS  11 /* this for first SwtchModule on the i2c BUS */
-#define I2C_ADDRESS  21 /* this for first CurrentSensorModule on the i2c BUS */
+//#define I2C_ADDRESS  21 /* this for first CurrentSensorModule on the i2c BUS */
 
 #define INITIAL_SAMPLES         100
 #define SAMPLES        32
@@ -34,6 +37,23 @@ void setup() {
   byte i;
   Serial.begin(115200);
   fdevopen(&myputc, NULL);
+  pinMode(ENABLE_EEPROM_PROG_PIN, INPUT);
+  pinMode(ENABLE_EEPROM_PROG_PIN-1, OUTPUT);
+  digitalWrite(ENABLE_EEPROM_PROG_PIN, LOW);
+  digitalWrite(ENABLE_EEPROM_PROG_PIN-1, HIGH);
+  if (digitalRead(ENABLE_EEPROM_PROG_PIN))
+  {
+    printf("Holistic Systems\n");
+    printf("Input i2c address:\n");
+    Serial.flush();
+    Serial.setTimeout(20000);
+    i2c_address=Serial.parseInt();
+    if (!i2c_address) EEPROM.write(0, i2c_address);
+  };
+  digitalWrite(ENABLE_EEPROM_PROG_PIN-1, LOW);
+  i2c_address = EEPROM.read(0);
+  printf("Holistic Systems\n");
+  printf("Module i2c address: %d\n", i2c_address);
   //  for (i = 0; i < sizeof(CurrentSensor) ; i++)
   //    pinMode(CurrentSensor[i], INPUT);
   delay(1000);
@@ -54,7 +74,7 @@ void setup() {
     Edge[i] = 0;
   }
   sample = 0;
-  Wire.begin(I2C_ADDRESS);                // join i2c bus with address
+  Wire.begin(i2c_address);                // join i2c bus with address
   Wire.onReceive(receiveEvent); // register event
 }
 
