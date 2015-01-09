@@ -7,17 +7,19 @@
 #include <EEPROM.h>
 
 #define ENABLE_EEPROM_PROG_PIN 9
-// for Selector {1, 2, 3, 4, 5};
+// for SelectorTypeA {1, 2, 3, 4, 5};
 // for Switch {11, 12, 13, 14, 15}
 // for CurrentSensor {21, 22, 23, 24, 25};
-byte i2c_address;
+// for SelectorTypeB {31, 32, 33, 34, 35};
+int i2c_address;
 //#define I2C_ADDRESS  1   /* this for first SelectorModule on the i2c BUS */
 //#define I2C_ADDRESS  11 /* this for first SwtchModule on the i2c BUS */
 //#define I2C_ADDRESS  21 /* this for first CurrentSensorModule on the i2c BUS */
 
-byte PositionSelectorA[] = {0, 5, 14, 28, 59, 0, 0};
-byte ChipSelect[] = {10};
-byte Relay[] = {2, 3, 4, 5, 6};
+int PositionSelectorA[] = {0, 5, 14, 28, 59, 0, 0};
+int PositionSelectorB[] = {0, 13, 127, 242, 255, 0, 0};
+const int ChipSelect= 10;
+int Relay[] = {2, 3, 4, 5, 6};
 
 int myputc(char c, FILE *)
 {
@@ -25,27 +27,34 @@ int myputc(char c, FILE *)
   return 0;
 }
 
+void digitalPotWrite(int address, int value) {
+  // take the SS pin low to select the chip:
+  digitalWrite(ChipSelect,LOW);
+  //  send in the address and value via SPI:
+  SPI.transfer(address);
+  SPI.transfer(value);
+  // take the SS pin high to de-select the chip:
+  digitalWrite(ChipSelect,HIGH); 
+}
+
 void setup() {
+  Serial.begin(115200);
   fdevopen(&myputc, NULL);
   pinMode(ENABLE_EEPROM_PROG_PIN, INPUT);
-  pinMode(ENABLE_EEPROM_PROG_PIN-1, OUTPUT);
-  digitalWrite(ENABLE_EEPROM_PROG_PIN, LOW);
-  digitalWrite(ENABLE_EEPROM_PROG_PIN-1, HIGH);
-  if (digitalRead(ENABLE_EEPROM_PROG_PIN))
+  digitalWrite(ENABLE_EEPROM_PROG_PIN, HIGH);
+  if (digitalRead(ENABLE_EEPROM_PROG_PIN) == LOW)
   {
     printf("Holistic Systems\n");
     printf("Input i2c address:\n");
     Serial.flush();
     Serial.setTimeout(20000);
     i2c_address=Serial.parseInt();
-    if (!i2c_address) EEPROM.write(0, i2c_address);
+    if (i2c_address) EEPROM.write(0, i2c_address);
   };
-  digitalWrite(ENABLE_EEPROM_PROG_PIN-1, LOW);
   i2c_address = EEPROM.read(0);
   printf("Holistic Systems\n");
   printf("Module i2c address: %d\n", i2c_address);
-  for (byte i = 0; i < sizeof(ChipSelect) ; i++)
-    pinMode(ChipSelect[i], OUTPUT);
+  pinMode(ChipSelect, OUTPUT);
   for (byte i = 0; i < sizeof(Relay) ; i++)
     pinMode(Relay[i], OUTPUT);
   Wire.begin(i2c_address);                // join i2c bus with address
@@ -57,16 +66,11 @@ void loop() {
 }
 
 void SelectorA(int id, int value) {
-  byte Chip, Potentiometer;
-  Chip = id / 6;
-  Potentiometer = id % 6;
-  // take the SS pin low to select the chip:
-  digitalWrite(ChipSelect[Chip], LOW);
-  //  send in the address and value via SPI:
-  SPI.transfer(Potentiometer);
-  SPI.transfer(PositionSelectorA[value]);
-  // take the SS pin high to de-select the chip:
-  digitalWrite(ChipSelect[Chip], HIGH);
+  digitalPotWrite(id, PositionSelectorA[value]);
+}
+
+void SelectorB(int id, int value) {
+  digitalPotWrite(id, PositionSelectorB[value]);
 }
 
 void RelayCommand(int rel, int level)
@@ -83,7 +87,10 @@ void receiveEvent(int num)
   }
   switch (command[0])
   {
-    case 's':
+    case 'B':
+      SelectorB(command[1], command[2]);
+      break;
+    case 'A':
       SelectorA(command[1], command[2]);
       break;
     case 'r':

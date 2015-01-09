@@ -38,19 +38,16 @@ void setup() {
   Serial.begin(115200);
   fdevopen(&myputc, NULL);
   pinMode(ENABLE_EEPROM_PROG_PIN, INPUT);
-  pinMode(ENABLE_EEPROM_PROG_PIN-1, OUTPUT);
-  digitalWrite(ENABLE_EEPROM_PROG_PIN, LOW);
-  digitalWrite(ENABLE_EEPROM_PROG_PIN-1, HIGH);
-  if (digitalRead(ENABLE_EEPROM_PROG_PIN))
+  digitalWrite(ENABLE_EEPROM_PROG_PIN, HIGH);
+  if (digitalRead(ENABLE_EEPROM_PROG_PIN) == LOW)
   {
     printf("Holistic Systems\n");
     printf("Input i2c address:\n");
     Serial.flush();
     Serial.setTimeout(20000);
     i2c_address=Serial.parseInt();
-    if (!i2c_address) EEPROM.write(0, i2c_address);
+    if (i2c_address) EEPROM.write(0, i2c_address);
   };
-  digitalWrite(ENABLE_EEPROM_PROG_PIN-1, LOW);
   i2c_address = EEPROM.read(0);
   printf("Holistic Systems\n");
   printf("Module i2c address: %d\n", i2c_address);

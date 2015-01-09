@@ -6,14 +6,14 @@
 #define N_SELECTORSPERMODULE 6
 #define N_SWITCHESPERMODULE 5
 #define N_CURRENTSENSORSPERMODULE 5
-#define N_ADC 6
 
 // byte CommandModuleAddress[] = {11, 12, 13, 14, 15, 16};
 // byte FeedbackModuleAddress[] = {1, 2, 3, 4, 5, 6};
 
-int SelectorModuleAddress[] = {1, 2, 3, 4, 5};
+int SelectorModuleTypeAAddress[] = {1, 2, 3, 4, 5};
 int SwitchModuleAddress[] = {11, 12, 13, 14, 15};
 int CurrentSensorModuleAddress[] = {21, 22, 23, 24, 25};
+int SelectorModuleTypeBAddress[] = {31, 32, 33, 34, 35};
 
 
 
@@ -26,7 +26,8 @@ byte ClockCmd = 'c';
 byte RawReq = 'd';
 byte WaveReq = 'w';
 byte EdgeReq = 'e';
-byte SelectorACmd = 's';
+byte SelectorACmd = 'A';
+byte SelectorBCmd = 'B';
 byte SwitchCmd = 'r';
 char outbuffer[120];
 
@@ -55,10 +56,20 @@ void loop()
     MicroShell();
 }
 
-char* CommandSelector(int Selector, int Position)
+char* CommandSelectorTypeA(int Selector, int Position)
 {
-  Wire.beginTransmission(SelectorModuleAddress[Selector / N_SELECTORSPERMODULE]);
+  Wire.beginTransmission(SelectorModuleTypeAAddress[Selector / N_SELECTORSPERMODULE]);
   Wire.write(SelectorACmd);             // sends value byte
+  Wire.write(Selector % N_SELECTORSPERMODULE);
+  Wire.write(Position);
+  Wire.endTransmission();
+  return "OK";
+}
+
+char* CommandSelectorTypeB(int Selector, int Position)
+{
+  Wire.beginTransmission(SelectorModuleTypeBAddress[Selector / N_SELECTORSPERMODULE]);
+  Wire.write(SelectorBCmd);             // sends value byte
   Wire.write(Selector % N_SELECTORSPERMODULE);
   Wire.write(Position);
   Wire.endTransmission();

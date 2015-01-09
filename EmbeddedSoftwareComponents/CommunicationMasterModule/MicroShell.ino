@@ -1,6 +1,9 @@
 //delete comment in following statement if you need echo
 //#define ECHO 1
 
+//delete comment in following statement if you need debug print
+//#define DEBUG 1
+
 // Do not touch following lines end comment
 typedef struct
 {
@@ -14,44 +17,64 @@ void result(char *format, ...);
 
 // Put here function prototype to expose with micro shell
 char* CommandSwitch(int Switch, int Position);
-char* CommandSelector(int Switch, int Position);
+char* CommandSelectorTypeA(int Switch, int Position);
+char* CommandSelectorTypeB(int Switch, int Position);
 char* RequestWave(int Signal);
 char* RequestRawData(int Signal);
 char* RequestStatus(int Signal);
 
 
 // Put here function wrapper
-void CommandSelector_wrapper(int argc, char **argv)
+void CommandSelectorTypeA_wrapper(int argc, char **argv)
 {
-  byte a;
-  byte b;
+  int a;
+  int b;
   argvscanf("%d %d", &a, &b);
-  CommandSelector(a, b);
-  //  result("Result: %s", CommandSelectorA(a, b));
+  #ifdef DEBUG
+//  result("Result: %s\n", CommandSelectorTypeA(a, b));
+  printf("Result: %s\n", CommandSelectorTypeA(a, b));
+  #else
+  CommandSelectorTypeA(a, b);  
+  #endif
+}
+void CommandSelectorTypeB_wrapper(int argc, char **argv)
+{
+  int a;
+  int b;
+  argvscanf("%d %d", &a, &b);
+  #ifdef DEBUG
+//  result("Result: %s\n", CommandSelectorTypeB(a, b));
+  printf("Result: %s\n", CommandSelectorTypeB(a, b));
+  #else
+  CommandSelectorTypeB(a, b);
+  #endif
 }
 void CommandSwitch_wrapper(int argc, char **argv)
 {
-  byte a;
-  byte b;
+  int a;
+  int b;
   argvscanf("%d %d", &a, &b);
+  #ifdef DEBUG
+  result("Result: %s\n", CommandSwitch(a, b));
+  #else
   CommandSwitch(a, b);
-  //  result("Result: %s", CommandSwitch(a, b));
+  #endif
 }
 void RequestWave_wrapper(int argc, char **argv)
 {
-  byte Signal;
+  int Signal;
   argvscanf("%d", &Signal);
   result("%s\n", RequestWave(Signal));
 }
 void RequestRawData_wrapper(int argc, char **argv)
 {
-  byte Signal;
+  int Signal;
   argvscanf("%d", &Signal);
   result("%s\n", RequestRawData(Signal));
 }
 void RequestStatus_wrapper(int argc, char **argv)
 {
-  byte Signal;
+  int Signal;
   argvscanf("%d", &Signal);
   result("%s\n", RequestStatus(Signal));
 }
@@ -60,7 +83,8 @@ void RequestStatus_wrapper(int argc, char **argv)
 PublishFunctionStruct PublishFunction[] =
 {
   {"CommandSwitch", CommandSwitch_wrapper},
-  {"CommandSelector", CommandSelector_wrapper},
+  {"CommandSelectorA", CommandSelectorTypeA_wrapper},
+  {"CommandSelectorB", CommandSelectorTypeB_wrapper},
   {"RequestWave", RequestWave_wrapper},
   {"RequestRawData", RequestRawData_wrapper},
   {"RequestStatus", RequestStatus_wrapper},
