@@ -16,8 +16,8 @@ end
 
 def status(*args)
   $s.puts "RequestStatus %d \n" % args
-  value=$s.gets.split(' ')
-  return value.last.to_i
+  value=$s.gets
+  return value.split(' ').last
 end
 end
 
@@ -46,8 +46,7 @@ hostname = 'localhost'
 port = 7777
 
 $s = TCPSocket.open(hostname, port)
-
-puts $s.gets
+puts "%s\r\n" % $s.gets.chomp
 
 
 at_exit do

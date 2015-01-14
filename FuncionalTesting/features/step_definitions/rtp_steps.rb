@@ -21,5 +21,6 @@ end
 
 Then /^the output Signal (.+) should be (.+)$/ do |a, expected|
 #	$rack=Rack.new
-	expect($rack.send('status', $dictionary[a][1])).to eq(expected.to_i)
+#	expect($rack.send('status', $dictionary[a][1]).to_i).to eq(expected.to_i)
+	expect($rack.send('status', $dictionary[a][1])).to eq(expected)
 end
