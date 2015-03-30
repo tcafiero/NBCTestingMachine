@@ -1,0 +1,260 @@
+
+Feature: VF000
+
+  Scenario: Compiled from VF000.json                       # features/VF000.feature:3
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 0 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal KeySts at level 1                     # features/step_definitions/rtp_steps.rb:6
+    Given the Signal ComfortEnable at level 0              # features/step_definitions/rtp_steps.rb:6
+      Broken pipe (Errno::EPIPE)
+      ./features/support/init.rb:10:in `write'
+      ./features/support/init.rb:10:in `puts'
+      ./features/support/init.rb:10:in `switch'
+      ./features/step_definitions/rtp_steps.rb:8:in `/^the Signal (.+) at level (.+)$/'
+      features/VF000.feature:7:in `Given the Signal ComfortEnable at level 0'
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Then the output Signal PosLightFollowMeCmd should be 0 # features/step_definitions/rtp_steps.rb:22
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 2 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal ComfortEnable at level 1              # features/step_definitions/rtp_steps.rb:6
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Then the output Signal PosLightFollowMeCmd should be 1 # features/step_definitions/rtp_steps.rb:22
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 5 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal FollowMeCmd at level 0                # features/step_definitions/rtp_steps.rb:6
+    Then the output Signal PosLightFollowMeCmd should be 0 # features/step_definitions/rtp_steps.rb:22
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 1 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+    Given the Signal ComfortEnable at level 0              # features/step_definitions/rtp_steps.rb:6
+    Given the Signal FollowMeCmd at level 1                # features/step_definitions/rtp_steps.rb:6
+    Given setting time marker 1                            # features/step_definitions/rtp_steps.rb:11
+    When after 2 secs starting from time marker 1          # features/step_definitions/rtp_steps.rb:16
+
+Failing Scenarios:
+cucumber features/VF000.feature:3 # Scenario: Compiled from VF000.json
+
+1 scenario (1 failed)
+243 steps (1 failed, 239 skipped, 3 passed)
+0m2.854s

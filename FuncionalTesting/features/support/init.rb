@@ -46,7 +46,8 @@ hostname = 'localhost'
 port = 7777
 
 $s = TCPSocket.open(hostname, port)
-puts "%s\r\n" % $s.gets.chomp
+#puts "%s\r\n" % $s.gets.chomp
+puts "%s\r\n" % $s.gets
 
 
 at_exit do
